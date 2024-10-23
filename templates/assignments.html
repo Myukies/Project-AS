@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <title>Assignments</title>
+</head>
+<body>
+    <div class="container">
+        <h1>Assignments</h1>
+        
+        {% if session.user == 'teacher' %}
+        <form method="POST" class="announcement-form">
+            <input type="text" name="assignment_text" placeholder="Assignment" required>
+            <input type="date" name="deadline" required>
+            <button class="add-button" type="submit">Add Assignment</button>
+        </form>
+        {% endif %}
+        
+        <h2>Existing Assignments</h2>
+        <ul>
+            {% for assignment in assignments %}
+                <li>
+                    <b>{{ assignment['assignment_text'] }}</b> (Deadline: {{ assignment['deadline'] }}) - 
+                    <span style="color: {{ 'green' if assignment['status'] == 'done' else 'red' }};">
+                        <b>Status: {{ assignment['status'] }}</b>
+                    </span>
+                    {% if session.user == 'student' and assignment['status'] != 'done' %}
+                        <form method="POST" action="{{ url_for('mark_done', assignment_id=assignment['_id']) }}" style="display:inline;">
+                            <button class="add-button" type="submit">Mark as Done</button>
+                        </form>
+                    {% endif %}
+                    {% if session.user == 'teacher' %}
+                        <div>
+                            {% if assignment['completed_by'] %}
+                                Completed by: {{ assignment['completed_by'] | join(", ") }}
+                            {% else %}
+                                No students have marked this as done.
+                            {% endif %}
+                        </div>
+                    {% endif %}
+                </li>
+            {% endfor %}
+        </ul>
+        
+        <nav class="navigation">
+            <a href="{% if session.user == 'teacher' %}/admin_home{% else %}/student_home{% endif %}">Home</a>
+            <a href="/logout">Logout</a>
+        </nav>
+    </div>
+</body>
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <title>Admin Home</title>
+</head>
+<body>
+    <div class="container">
+        <h1>Welcome, Admin!</h1>
+        
+        <h2>Announcements</h2>
+        <ul class="announcement-list">
+            {% for announcement in announcements %}
+                <li>
+                    <span class="announcement-text"><b>{{ announcement['text'] }}</b> ({{ announcement['created_at'] }})</span>
+                    <form method="POST" action="{{ url_for('delete_announcement', id=announcement['_id']) }}" style="display:inline;">
+                        <button type="submit" class="delete-button">Delete</button>
+                    </form>
+                </li>
+            {% endfor %}
+        </ul>
+
+        <h3>Add Announcement</h3>
+        <form method="POST" class="announcement-form">
+            <input type="text" name="announcement" placeholder="Your announcement" required>
+            <button type="submit" class="add-button">Add</button>
+        </form>
+
+        <nav class="navigation">
+            <a href="/assignments">Assignments</a>
+            <a href="/attendance">Attendance</a>
+            <a href="/logout">Logout</a>
+        </nav>
+    </div>
+</body>
+</html>

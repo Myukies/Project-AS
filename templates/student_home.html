@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <title>Student Home</title>
+</head>
+<body>
+    <div class="container">
+        <h1>Welcome, Student!</h1>
+        
+        <h2>Announcements</h2>
+        <ul class="announcement-list">
+            {% for announcement in announcements %}
+                <li><b>{{ announcement['text'] }}</b> ({{ announcement['created_at'] }})</li>
+            {% endfor %}
+        </ul>
+
+        <nav class="navigation">
+            <a href="/assignments">Assignments</a>
+            <a href="/attendance">Attendance</a>
+            <a href="/logout">Logout</a>
+        </nav>
+    </div>
+</body>
+</html>

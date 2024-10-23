@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <title>Attendance Records</title>
+</head>
+<body>
+    <div class="container">
+        <h1>Attendance Records</h1>
+
+        <form method="POST" class="announcement-form">
+            <label for="date">Select Date:</label>
+            <input type="date" id="date" name="date" required>
+            <button class="add-button" type="submit">Filter</button>
+        </form>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Student Name</th>
+                    <th>Lecture Number</th>
+                    <th>Date</th>
+                    <th>Time</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for record in attendance_data %}
+                    <tr>
+                        <td>{{ record['student_name'] }}</td>
+                        <td>{{ record['lecture_number'] }}</td>
+                        <td>{{ record['date'] }}</td>
+                        <td>{{ record['time'] }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <nav class="navigation">
+            <a href="{% if session.user == 'teacher' %}/admin_home{% else %}/student_home{% endif %}">Home</a>
+            <a href="/attendance">Reset Filter</a>
+            <a href="/logout">Logout</a>
+        </nav>
+    </div>
+</body>
+</html>
