@@ -107,7 +107,7 @@ def assignments():
             "deadline": deadline,
             "created_at": datetime.now().isoformat(),
             "status": "not done",
-            "completed_by": []  # Initialize completed_by as an empty list
+            "completed_by": []  
         })
         return redirect(url_for('assignments'))
 
