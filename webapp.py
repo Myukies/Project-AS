@@ -5,7 +5,7 @@ from bson.objectid import ObjectId
 import certifi
 
 app = Flask(__name__)
-app.secret_key = 'your_secret_key'
+app.secret_key = 'secret_key'
 
 MONGODB_URI = "mongodb+srv://sysadmin:kraFY1B9omw619ik@attendance-system.cumins2.mongodb.net/?retryWrites=true&w=majority&appName=attendance-system"
 client = MongoClient(MONGODB_URI, tls=True, tlsAllowInvalidCertificates=True, tlsCAFile=certifi.where())
